@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="me.daiwei.dao.CoAccountDtoMapper" >
+  <resultMap id="BaseResultMap" type="me.daiwei.Model.CoAccountDto" >
+    <id column="co_account_id" property="coAccountId" jdbcType="SMALLINT" />
+    <result column="country_id" property="countryId" jdbcType="SMALLINT" />
+    <result column="currency_id" property="currencyId" jdbcType="SMALLINT" />
+    <result column="product_id" property="productId" jdbcType="TINYINT" />
+    <result column="soft_delete_flag" property="softDeleteFlag" jdbcType="CHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="me.daiwei.Model.CoAccountDto" extends="BaseResultMap" >
+    <result column="co_account_name" property="coAccountName" typeHandler="me.daiwei.handler.MyBlobTypeHandler"/>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    co_account_id, country_id, currency_id, product_id, soft_delete_flag, update_time,
+    create_time
+  </sql>
+  <sql id="Blob_Column_List" >
+    co_account_name
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Short" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from co_account_master
+    where co_account_id = #{coAccountId,jdbcType=SMALLINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Short" >
+    delete from co_account_master
+    where co_account_id = #{coAccountId,jdbcType=SMALLINT}
+  </delete>
+  <insert id="insert" parameterType="me.daiwei.Model.CoAccountDto" >
+    insert into co_account_master (co_account_id, country_id, currency_id,
+      product_id, soft_delete_flag, update_time,
+      create_time, co_account_name)
+    values (#{coAccountId,jdbcType=SMALLINT}, #{countryId,jdbcType=SMALLINT}, #{currencyId,jdbcType=SMALLINT},
+      #{productId,jdbcType=TINYINT}, #{softDeleteFlag,jdbcType=CHAR}, #{updateTime,jdbcType=TIMESTAMP},
+      #{createTime,jdbcType=TIMESTAMP}, #{coAccountName,jdbcType=BINARY})
+  </insert>
+  <insert id="insertSelective" parameterType="me.daiwei.Model.CoAccountDto" >
+    insert into co_account_master
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="coAccountId != null" >
+        co_account_id,
+      </if>
+      <if test="countryId != null" >
+        country_id,
+      </if>
+      <if test="currencyId != null" >
+        currency_id,
+      </if>
+      <if test="productId != null" >
+        product_id,
+      </if>
+      <if test="softDeleteFlag != null" >
+        soft_delete_flag,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="coAccountName != null" >
+        co_account_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="coAccountId != null" >
+        #{coAccountId,jdbcType=SMALLINT},
+      </if>
+      <if test="countryId != null" >
+        #{countryId,jdbcType=SMALLINT},
+      </if>
+      <if test="currencyId != null" >
+        #{currencyId,jdbcType=SMALLINT},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=TINYINT},
+      </if>
+      <if test="softDeleteFlag != null" >
+        #{softDeleteFlag,jdbcType=CHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="coAccountName != null" >
+        #{coAccountName,jdbcType=BINARY},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="me.daiwei.Model.CoAccountDto" >
+    update co_account_master
+    <set >
+      <if test="countryId != null" >
+        country_id = #{countryId,jdbcType=SMALLINT},
+      </if>
+      <if test="currencyId != null" >
+        currency_id = #{currencyId,jdbcType=SMALLINT},
+      </if>
+      <if test="productId != null" >
+        product_id = #{productId,jdbcType=TINYINT},
+      </if>
+      <if test="softDeleteFlag != null" >
+        soft_delete_flag = #{softDeleteFlag,jdbcType=CHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="coAccountName != null" >
+        co_account_name = #{coAccountName,jdbcType=BINARY},
+      </if>
+    </set>
+    where co_account_id = #{coAccountId,jdbcType=SMALLINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="me.daiwei.Model.CoAccountDto" >
+    update co_account_master
+    set country_id = #{countryId,jdbcType=SMALLINT},
+      currency_id = #{currencyId,jdbcType=SMALLINT},
+      product_id = #{productId,jdbcType=TINYINT},
+      soft_delete_flag = #{softDeleteFlag,jdbcType=CHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      co_account_name = #{coAccountName,jdbcType=BINARY}
+    where co_account_id = #{coAccountId,jdbcType=SMALLINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="me.daiwei.Model.CoAccountDto" >
+    update co_account_master
+    set country_id = #{countryId,jdbcType=SMALLINT},
+      currency_id = #{currencyId,jdbcType=SMALLINT},
+      product_id = #{productId,jdbcType=TINYINT},
+      soft_delete_flag = #{softDeleteFlag,jdbcType=CHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where co_account_id = #{coAccountId,jdbcType=SMALLINT}
+  </update>
+
+  <!-- ==============以下内容是根据自身业务扩展的内容======================= -->
+      <!-- select标签的id属性与UserMapper接口中定义的getAllUser方法要一模一样 -->
+    <select id="getAll" resultMap="ResultMapWithBLOBs">
+        select * from co_account_master
+    </select>
+</mapper>
